@@ -4,46 +4,46 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: userservice
-          uri: lb://UserService
+        - id: userservice                  #RouteIdentifier
+          uri: lb://UserService            #Respective Microservices url which needs to be mapped
           predicates:
-            - Path=/userservice/**
+            - Path=/user/**                #Request Context Path Mapping
           filters:
             - name: CircuitBreaker
               args:
                 name: userservice
-                fallbackuri: forward:/orderFallBack
+                fallbackuri: forward:/userFallBack
         - id: bookservice
           uri: lb://BookService
           predicates:
-            - Path=/bookservice/**
+            - Path=/book/**
           filters:
             - name: CircuitBreaker
               args:
                 name: bookservice
-                fallbackuri: forward:/orderFallBack
+                fallbackuri: forward:/bookFallBack
         - id: cartservice
           uri: lb://CartService
           predicates:
-            - Path=/cartservice/**
+            - Path=/cart/**
           filters:
             - name: CircuitBreaker
               args:
                 name: cartservice
-                fallbackuri: forward:/orderFallBack
+                fallbackuri: forward:/cartFallBack
         - id: orderservice
           uri: lb://OrderService
           predicates:
-            - Path=/orderservice/**
+            - Path=/order/**
           filters:
             - name: CircuitBreaker
               args:
                 name: orderservice
                 fallbackuri: forward:/orderFallBack
-        - id: payment-service
+        - id: paymentservice
           uri: lb://PaymentService
           predicates:
-            - Path=/paymentservice/**
+            - Path=/payment/**
           filters:
             - name: CircuitBreaker
               args:
